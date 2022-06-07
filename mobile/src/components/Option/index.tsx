@@ -2,7 +2,8 @@ import React from 'react';
 import { TouchableOpacity,
 TouchableOpacityProps,
 Image,
-ImageProps } from 'react-native';
+ImageProps,
+Text } from 'react-native';
 
 import { styles } from './styles';
 
@@ -17,7 +18,14 @@ export function Option({title, image, ...rest}: Props) {
     style={styles.container}
     {...rest}
     >
-        
+       <Image
+       source={image}
+       style={styles.image}
+       /> 
+
+       <Text style={styles.title}>
+       {title}
+       </Text>
     </TouchableOpacity>
   );
 }
