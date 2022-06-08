@@ -1,5 +1,5 @@
-import { ArrowArcLeft } from 'phosphor-react-native';
-import React from 'react';
+import { ArrowLeft } from 'phosphor-react-native';
+import React, {useState} from 'react';
 import {
     View,
     TextInput,
@@ -8,22 +8,42 @@ import {
     TouchableOpacity
 } from 'react-native';
 
-import {FeedbackTypes} from '../../components/Widget';
+import { FeedbackType } from '../../components/Widget';
+import { ScreenshotButton } from '../../components/ScreenshotButton';
+import { Button } from '../../components/Button';
+import {captureScreen} from 'react-native-view-shot'
 import { theme } from '../../theme';
 import { styles } from './styles';
-import {feedbackTypes} from '../../utils/feedbackTypes';
+import { feedbackTypes } from '../../utils/feedbackTypes';
 
 interface Props {
-    feedbackType: FeedbackTypes;
+    feedbackType: FeedbackType;
+    onFeedbackCanceled:( ) => void;
+    onFeedbackSent:() => void;
 }
 
-export function Form({feedbackType}: Props) {
-    const feedbackTypeInfo = feedbackTypes[feedbackType]
+export function Form({ feedbackType,  onFeedbackCanceled,onFeedbackSent }: Props) {
+    const [screenshot, setScreenshot] = useState<string | null>(null);
+    const feedbackTypeInfo = feedbackTypes[feedbackType];
+
+    function handleScreenshot(){
+        captureScreen({
+            format: 'jpg',
+            quality: 0.8
+        })
+        .then(uri => setScreenshot(uri))
+        .catch(error => console.log(error))
+    }
+
+    function handleScreenshotRemove(){
+        setScreenshot(null);
+    }
+
     return (
         <View style={styles.container}>
             <View style={styles.header}>
-                <TouchableOpacity>
-                    <ArrowArcLeft
+                <TouchableOpacity onPress={onFeedbackCanceled}>
+                    <ArrowLeft
                         size={24}
                         weight="bold"
                         color={theme.colors.text_secondary}
@@ -45,7 +65,19 @@ export function Form({feedbackType}: Props) {
                 style={styles.input}
                 placeholder="Algo não está funcionando bem? Queremos corrigir. Conte com detalhes o que está acontecendo..."
                 placeholderTextColor={theme.colors.stroke}
+                autoCorrect={false}
             />
+            <View style={styles.footer}>
+                <ScreenshotButton
+                    onTakeShot={handleScreenshot}
+                    onRemoveShot={handleScreenshotRemove}
+                    screenshot={screenshot}
+
+                />
+                <Button 
+                 isLoading={false}
+                />
+            </View>
         </View>
     );
 }

@@ -5,32 +5,40 @@ import { theme } from '../../theme';
 
 import { styles } from './styles';
 
-interface Props{
-    screenshot: string | null;
-    onTakeShot:() => void;
-    onRemoveShot:() => void;
+interface Props {
+  screenshot: string | null;
+  onTakeShot: () => void;
+  onRemoveShot: () => void;
 }
 
-export function ScreenshotButton({screenshot,onTakeShot,onRemoveShot}: Props) {
+export function ScreenshotButton({ screenshot, onTakeShot, onRemoveShot }: Props) {
   return (
     <TouchableOpacity style={styles.container}
-    onPress={screenshot ? onRemoveShot : onTakeShot}
+      onPress={screenshot ? onRemoveShot : onTakeShot}
     >
-       {
-           screenshot
-           ?
-           <Trash
-            size={22}
-            color={theme.colors.text_secondary}
-            style={styles.removeIcon}
-           />
-           :
-           <Trash
+      {
+        screenshot
+          ?
+          <View>
+            <Image
+              style={styles.image}
+              source={{uri:screenshot}}
+            />
+
+
+            <Trash
+              size={22}
+              color={theme.colors.text_secondary}
+              style={styles.removeIcon}
+            />
+          </View>
+          :
+          <Camera
             size={22}
             color={theme.colors.text_secondary}
             weight="bold"
-           />
-       }
+          />
+      }
     </TouchableOpacity>
   );
 }
