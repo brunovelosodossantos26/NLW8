@@ -1,7 +1,7 @@
 export interface FeedbackCreateData{
     type: string;
     comment: string;
-    screeshot?: string;
+    screenshot?: string;
 }
 
 export interface FeedbacksRepository{

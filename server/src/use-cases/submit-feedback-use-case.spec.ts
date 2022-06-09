@@ -14,7 +14,7 @@ describe('Submit feeback', ()=>{
         await expect(submitFeedback.execute({
             type:'BUG',
             comment:'example comment',
-            screeshot: 'data:image/png;base64,jfjfjfjfj',
+            screenshot: 'data:image/png;base64,jfjfjfjfj',
         })).resolves.not.toThrow();
 
         expect(createFeedbackSpy).toHaveBeenCalled();
@@ -25,7 +25,7 @@ describe('Submit feeback', ()=>{
         await expect(submitFeedback.execute({
             type:'',
             comment:'example comment',
-            screeshot: 'data:image/png;base64,jfjfjfjfj',
+            screenshot: 'data:image/png;base64,jfjfjfjfj',
         })).rejects.toThrow();
     })
 
@@ -33,7 +33,7 @@ describe('Submit feeback', ()=>{
         await expect(submitFeedback.execute({
             type:'BUG',
             comment:'',
-            screeshot: 'data:image/png;base64,jfjfjfjfj',
+            screenshot: 'data:image/png;base64,jfjfjfjfj',
         })).rejects.toThrow();
     })
 
@@ -41,7 +41,7 @@ describe('Submit feeback', ()=>{
         await expect(submitFeedback.execute({
             type:'BUG',
             comment:'example comment',
-            screeshot: '123',
+            screenshot: '123',
         })).rejects.toThrow();
     })
 });

@@ -8,7 +8,7 @@ export const routes = express.Router();
 
 
 routes.post('/feedbacks', async (req,res) =>{
-    const {type, comment, screeshot} = req.body;
+    const {type, comment, screenshot} = req.body;
     
     const prismaFeedbacksRepository = new PrismaFeedbackRepository();
     const nodemailerMailAdapter = new NodemailerMailAdapter()
@@ -20,7 +20,7 @@ routes.post('/feedbacks', async (req,res) =>{
     await submitFeedbackUseCase.execute({
       type,
       comment,
-      screeshot,
+      screenshot,
     })
 
  
